@@ -1,15 +1,18 @@
 # Lombok @Data @Builder 一起使用问题
+
 # 背景
+
 @Data 和 @Builder 是我们使用 lombok 过程中常用的两个注解,@Data可以帮我们将一个普通类变成JavaBean，并自动生成相应属性的 Getter,Setter等方法；而@Builder注解则是应用的构造者模式，通过链式方法帮助我们生成对象。
 # 问题
+
 有时候我们会将@Data 和 @Builder这两个注解混合使用，对应的场景为在生成对象的时候通过构造者模式生成对象，然后将生成的对象作为 JavaBean 使用。然而在实际使用时会发现我们将这两个注解放在一起会编译失败。这里我们暂且不评价这样使用的好坏，而是先专注于解决问题。
 
 这个问题已经在新版的 lombok 中解决，你可以通过升级 lombok 为最新版的解决。
 下面介绍的方法都是旧版的解决方案。
 
-# 解决方案一：通过添加@NoArgsConstructor 和 @AllArgsConstructor 这两个注解
-如下:
+# 解决方案一：
 
+通过添加@NoArgsConstructor 和 @AllArgsConstructor 这两个注解
 @Data
 @Builder
 @NoArgsConstructor
@@ -23,9 +26,9 @@ public class UserDTO {
 
 这种方式会通过@AllArgsConstructor生成一个访问级别为 public 的全参构造器。@Builder可以用生成的全参构造器来构造对象,不再与@Data所包含的@RequiredArgsConstructor发生冲突
 
-# 解决方案二:通过自己重写无参构造器,并添加@Tolerate注解
-如下:
+# 解决方案二:
 
+通过自己重写无参构造器,并添加@Tolerate注解
 @Data
 @Builder
 @AllArgsConstructor
